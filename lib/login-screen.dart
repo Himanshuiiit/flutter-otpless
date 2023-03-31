@@ -37,12 +37,17 @@ class _LoginScreenState extends State<LoginScreen> {
     _otplessFlutterPlugin.authStream.listen((token) async {
       final res = await postRequest(token.toString());
       print(token.toString());
-      print(jsonDecode(res.body)['data']['userName']);
+      print(jsonDecode(res.body)['data']);
       final userName = jsonDecode(res.body)['data']['userName'];
+      final userNumber = jsonDecode(res.body)['data']['userMobile'];
+      // final user = await http.get(Uri.parse('http://10.0.2.2:3000/user?userNumber=${userNumber}'));
+      // print(user);
       if(token!=null){
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MyHomePage(token: token, userName: userName)),
+          MaterialPageRoute(builder: (context) => MyHomePage(token: token, userName: userName,
+              // user : jsonDecode(user.body)
+          )),
         );
       }
     });
